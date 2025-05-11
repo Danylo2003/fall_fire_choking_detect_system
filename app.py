@@ -7,7 +7,7 @@ import cv2
 from ultralytics import YOLO
 
 # Load the YOLO model
-model = YOLO("best.pt")
+model = YOLO("./models/best.pt")
 
 def predict_image(img, conf_threshold, iou_threshold, image_size):
     """Predicts objects in an image using a YOLOv8 model with adjustable thresholds."""
@@ -19,7 +19,7 @@ def predict_image(img, conf_threshold, iou_threshold, image_size):
         show_conf=True,
         imgsz=image_size,
     )
-    
+
     for r in results:
         im_array = r.plot()
         im = Image.fromarray(im_array[..., ::-1])
@@ -155,7 +155,7 @@ def process_webcam(video_input, conf_threshold, iou_threshold, image_size):
     return annotated_frame, fps
 
 # Example images for static image detection
-example_list = [["examples/" + example] for example in os.listdir("examples")]
+example_list = [["examples/" + example] for example in os.listdir("input")]
 
 # Create tabs for different input types
 def create_demo():
@@ -275,4 +275,4 @@ demo = create_demo()
 
 if __name__ == "__main__":
     # For Hugging Face Spaces compatibility
-    demo.launch(share=True)
+    demo.launch(inbrowser=True)
