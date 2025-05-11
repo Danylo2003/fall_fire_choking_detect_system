@@ -155,30 +155,26 @@ def process_webcam(video_input, conf_threshold, iou_threshold, image_size):
     return annotated_frame, fps
 
 # Example images for static image detection
-example_list = [["examples/" + example] for example in os.listdir("input")]
+example_list = [["input/" + example] for example in os.listdir("input")]
 
 # Create tabs for different input types
 def create_demo():
-    with gr.Blocks(title="YOLOv10: Real-Time Fire and Smoke Detection") as demo:
-        gr.Markdown("""# YOLOv10: Real-Time Fire and Smoke Detection
-        This project utilizes the YOLOv10 model to detect Fire and Smoke in Real-Time. 
-        Adjust the confidence and IoU thresholds for optimal detection performance.
-        [Github](https://github.com/X-Men01/YOLOv10-Fire-and-Smoke-Detection)
-        """)
+    with gr.Blocks(title="Real-Time AI Detect System") as demo:
+        gr.Markdown("""# Real-Time AI Detect System""")
         
         with gr.Tabs():
             with gr.Tab("Static Image"):
                 with gr.Row():
                     with gr.Column():
                         image_input = gr.Image(type="pil", label="Upload Image")
-                        conf_slider = gr.Slider(minimum=0, maximum=1, value=0.25, label="Confidence threshold")
-                        iou_slider = gr.Slider(minimum=0, maximum=1, value=0.45, label="IoU threshold")
+                        conf_slider = gr.Slider(minimum=0, maximum=1, value=0.02, label="Confidence threshold")
+                        iou_slider = gr.Slider(minimum=0, maximum=1, value=0.3, label="IoU threshold")
                         img_size_slider = gr.Slider(
                             label="Image Size",
                             minimum=320,
                             maximum=1280,
                             step=32,
-                            value=640,
+                            value=512,
                         )
                         image_button = gr.Button("Run Inference")
                     
@@ -234,7 +230,7 @@ def create_demo():
                     scroll_to_output=True
                 )
             
-            with gr.Tab("Webcam (Real-time)"):
+            with gr.Tab("RTSP (Real-time)"):
                 with gr.Row():
                     with gr.Column(scale=1):
                         webcam_conf_slider = gr.Slider(minimum=0, maximum=1, value=0.25, label="Confidence threshold", interactive=True)
@@ -275,4 +271,4 @@ demo = create_demo()
 
 if __name__ == "__main__":
     # For Hugging Face Spaces compatibility
-    demo.launch(inbrowser=True)
+    demo.launch()
